@@ -20,7 +20,7 @@ const defaultStyles = {
         width: "200px",
         zIndex: 100000,
         backgroundColor: "var(--ui-shade-4)",
-        color: "white"
+        color: "var(--ui-text)"
     },
     option: {
         backgroundColor: "rgba(0, 0, 0, 0)",
@@ -72,7 +72,7 @@ function DropdownSetting<Option extends BaseDropdownOption>(
                 ...baseStyles,
                 display: "flex",
                 alignItems: "center",
-                color: "white",
+                color: "var(--ui-text)",
                 ...props.dropdownLabelStyle
             }),
             menu: baseStyles => ({

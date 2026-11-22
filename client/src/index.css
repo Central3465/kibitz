@@ -38,8 +38,18 @@
     --ui-text-muted: #9aa3b1;
     --ui-text-faint: #6b7381;
 
+    /* Overlays and translucent surfaces */
+    --ui-hover: rgba(255, 255, 255, 0.06);
+    --ui-hover-strong: rgba(255, 255, 255, 0.1);
+    --ui-well: rgba(0, 0, 0, 0.18);
+    --ui-navbar-bg: rgba(20, 23, 28, 0.85);
+    --ui-floating-bg: rgba(34, 39, 47, 0.92);
+    --ui-best-text: #4fe955;
+    --ui-icon-filter: none;
+
     /* Shape */
     --ui-border: rgba(255, 255, 255, 0.07);
+    --ui-border-strong: rgba(255, 255, 255, 0.12);
     --ui-radius-sm: 8px;
     --ui-radius: 12px;
     --ui-radius-lg: 16px;
@@ -52,6 +62,55 @@
     --rt-opacity: 0.95 !important;
 
     color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+    --ui-blue: #2f6fe4;
+    --ui-blue-hover: #4a82ea;
+
+    --ui-shade-1: #eef0f4;
+    --ui-shade-2: #f6f7f9;
+    --ui-shade-3: #ffffff;
+    --ui-shade-4: #f2f4f7;
+    --ui-shade-5: #e7eaef;
+    --ui-shade-6: #d8dce4;
+    --ui-shade-7: #b5bcc8;
+
+    --ui-text: #1b1f25;
+    --ui-text-muted: #5a6371;
+    --ui-text-faint: #8b94a2;
+
+    --ui-hover: rgba(15, 23, 42, 0.05);
+    --ui-hover-strong: rgba(15, 23, 42, 0.09);
+    --ui-well: rgba(15, 23, 42, 0.04);
+    --ui-navbar-bg: rgba(255, 255, 255, 0.85);
+    --ui-floating-bg: rgba(255, 255, 255, 0.94);
+    --ui-best-text: #24883a;
+
+    /* Interface icons are light grey; darken them on light surfaces */
+    --ui-icon-filter: invert(1) brightness(0.55);
+
+    --ui-border: rgba(15, 23, 42, 0.09);
+    --ui-border-strong: rgba(15, 23, 42, 0.15);
+    --ui-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+
+    --rt-color-dark: #1b1f25 !important;
+
+    color-scheme: light;
+}
+
+/* Interface icons (webpack emits them under /img/interface/) */
+img[src*="/img/interface/"] {
+    filter: var(--ui-icon-filter);
+}
+
+/* Icons on coloured buttons stay white */
+[data-accent] img[src*="/img/interface/"] {
+    filter: none;
+}
+
+body, header, footer, main {
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 html {

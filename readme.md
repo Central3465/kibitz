@@ -16,6 +16,7 @@
 - **Saved games** – keep analysed games in your browser and come back to them later.
 - **Mobile friendly** – the board, analysis panel and move navigation adapt to small screens.
 - **Private by design** – no accounts, no ads, no analytics or tracking. Settings and saved games never leave your device.
+- **Light & dark themes** – switch from the header, or follow your device setting.
 - **Customisable** – engine version, depth, number of lines, suggestion arrows, board colours and which classifications to show.
 - **Translations** – available in 11 languages.
 

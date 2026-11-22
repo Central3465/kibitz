@@ -16,6 +16,7 @@ function AnalyseButton({ style, onClick }: AnalyseButtonProps) {
         style={style}
         icon={iconAnalysis}
         iconSize="30px"
+        accent
         onClick={onClick}
     >
         {t("analyseButton")}

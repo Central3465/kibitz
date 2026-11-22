@@ -3,7 +3,7 @@
     align-items: center;
     gap: 10px;
 
-    color: white;
+    color: var(--ui-text);
 }
 
 .profileImage {
@@ -22,9 +22,9 @@
 }
 
 .username {
-    color: white;
+    color: var(--ui-text);
 }
 
 .rating {
-    color: grey;
+    color: var(--ui-text-muted);
 }

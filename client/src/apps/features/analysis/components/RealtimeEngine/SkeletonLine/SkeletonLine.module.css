@@ -1,14 +1,14 @@
 @keyframes pulse {
     0% {
-        background-color: rgba(0, 0, 0, 0.15);
+        background-color: var(--ui-well);
     }
 
     50% {
-        background-color: rgba(26, 26, 26, 0.15);
+        background-color: var(--ui-hover);
     }
 
     100% {
-        background-color: rgba(0, 0, 0, 0.15);
+        background-color: var(--ui-well);
     }
 }
 
@@ -22,7 +22,7 @@
     height: 25px;
 
     border-radius: 7px;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: var(--ui-well);
 }
 
 .lineMoves {
@@ -30,7 +30,7 @@
     height: 25px;
 
     border-radius: 7px;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: var(--ui-well);
 }
 
 .pulsing {

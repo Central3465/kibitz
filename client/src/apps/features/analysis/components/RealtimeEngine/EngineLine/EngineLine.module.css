@@ -8,7 +8,7 @@
     box-sizing: border-box;
     position: relative;
 
-    color: white;
+    color: var(--ui-text);
     overflow: hidden;
 
     transition: height 0.3s ease-out;
@@ -31,7 +31,7 @@
 }
 
 .lineMove:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--ui-well);
 }
 
 .expandArrowContainer {
@@ -47,7 +47,7 @@
 }
 
 .expandArrowContainer:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--ui-well);
 }
 
 .expandArrow {

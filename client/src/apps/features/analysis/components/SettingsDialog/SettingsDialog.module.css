@@ -17,7 +17,7 @@
     width: 100%;
 
     background-color: var(--ui-shade-2);
-    color: white;
+    color: var(--ui-text);
     font-family: "Nunito";
     font-weight: 700;
 
@@ -41,7 +41,7 @@
     gap: 10px;
     width: 100%;
 
-    color: white;
+    color: var(--ui-text);
 
     overflow-wrap: anywhere;
 }

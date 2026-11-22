@@ -78,7 +78,7 @@
 
         border: 1px solid var(--ui-border);
         border-radius: var(--ui-radius-lg);
-        background-color: rgba(34, 39, 47, 0.92);
+        background-color: var(--ui-floating-bg);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         box-shadow: var(--ui-shadow);

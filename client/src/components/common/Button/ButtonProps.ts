@@ -9,6 +9,8 @@ interface ButtonProps {
     highlighted?: boolean;
     tooltipId?: string;
     disabled?: boolean;
+    /** Coloured button: keeps white text and icons in every theme */
+    accent?: boolean;
     onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 

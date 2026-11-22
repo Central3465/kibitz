@@ -43,7 +43,7 @@
     }
 }
 
-.section > span, .section > div > span {
+.section > span:not([class]), .section > div > span:not([class]) {
     color: var(--ui-text-muted);
 }
 

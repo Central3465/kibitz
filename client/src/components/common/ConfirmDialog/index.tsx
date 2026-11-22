@@ -47,7 +47,7 @@ function ConfirmDialog({
                 onClick={onClose}
                 style={{
                     padding: "10px 20px",
-                    backgroundColor: "#242424"
+                    backgroundColor: ButtonColour.GREY
                 }}
             >
                 {t("confirmDialog.no")}

@@ -14,6 +14,7 @@ function Settings() {
     const location = useLocation();
 
     const categories = [
+        { path: "/settings/appearance", label: t("theme.title", { ns: "common" }) },
         { path: "/settings/theme", label: t("boardAndPieces.title") },
         { path: "/settings/bugs", label: t("bugReporting.title") }
     ];

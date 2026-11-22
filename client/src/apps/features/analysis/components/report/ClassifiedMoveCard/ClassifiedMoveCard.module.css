@@ -33,7 +33,7 @@
     align-items: center;
     gap: 2px;
 
-    color: #4fe955
+    color: var(--ui-best-text)
 }
 
 .bestAlternativeMove {
@@ -47,7 +47,7 @@
 }
 
 .bestAlternativeMove:hover {
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: var(--ui-well);
 }
 
 .opening {
@@ -57,8 +57,8 @@
     text-align: center;
 
     border-radius: 0 0 10px 10px;
-    background-color: #2c2f3596;
-    color: white;
+    background-color: var(--ui-well);
+    color: var(--ui-text);
 
     overflow-wrap: anywhere;
 }

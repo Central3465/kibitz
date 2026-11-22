@@ -9,13 +9,13 @@
     flex-grow: 1;
 
     border: none;
-    border-bottom: 1px solid #2f2f2f;
+    border-bottom: 1px solid var(--ui-border-strong);
 }
 
 .text {
     margin: 0 5px;
 
-    color: #2f2f2f;
+    color: var(--ui-border-strong);
     font-family: "Nunito";
     text-transform: uppercase;
 }

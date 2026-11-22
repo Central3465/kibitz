@@ -23,5 +23,5 @@
     height: 1px;
 
     border-width: 1px 0 0 0;
-    border-color: #a5a5a5;
+    border-color: var(--ui-text-faint);
 }

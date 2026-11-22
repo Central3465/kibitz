@@ -15,7 +15,7 @@
 
     border-radius: 100%;
     border: 10px solid var(--ui-shade-5);
-    border-bottom-color: #47acff;
+    border-bottom-color: var(--ui-blue);
 
     animation: spin 1s linear infinite;
 }

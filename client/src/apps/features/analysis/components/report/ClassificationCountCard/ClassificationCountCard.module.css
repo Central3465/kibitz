@@ -14,7 +14,7 @@
     box-sizing: border-box;
     padding: 0 5px;
 
-    color: white;
+    color: var(--ui-text);
     font-family: "Nunito";
     font-weight: 700;
     font-size: 0.8rem;

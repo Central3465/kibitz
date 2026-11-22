@@ -57,5 +57,14 @@
     "bugReportWidget": {
         "tooltip": "Copy Console Logs",
         "toast": "Copied Console Logs!"
+    },
+    "theme": {
+        "title": "Theme",
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark",
+        "description": "Choose a colour theme. System follows your device's setting.",
+        "switchToLight": "Switch to light theme",
+        "switchToDark": "Switch to dark theme"
     }
 }

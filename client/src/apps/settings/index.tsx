@@ -5,6 +5,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PageWrapper from "@/components/layout/PageWrapper";
 import Settings from "./pages/Settings";
 
+const AppearanceSection = lazy(
+    () => import("./components/categories/Appearance")
+);
+
 const BoardAndPiecesSection = lazy(
     () => import("./components/categories/BoardAndPieces")
 );
@@ -27,7 +31,9 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/settings" element={<Settings/>}>
-                    <Route index element={<Navigate to="/settings/theme"/>} />
+                    <Route index element={<Navigate to="/settings/appearance"/>} />
+
+                    <Route path="/settings/appearance" element={<AppearanceSection/>} />
 
                     <Route path="/settings/theme" element={<BoardAndPiecesSection/>} />
                     <Route path="/settings/bugs" element={<BugReportingSection/>} />

@@ -27,3 +27,8 @@
 .button:active:not(:disabled) {
     transform: scale(0.97);
 }
+
+.accent {
+    border-color: transparent;
+    color: white;
+}

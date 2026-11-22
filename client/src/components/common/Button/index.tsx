@@ -1,6 +1,7 @@
 import React from "react";
 
 import ButtonProps from "./ButtonProps";
+import ButtonColour from "./Colour";
 import * as styles from "./Button.module.css";
 
 function Button({
@@ -12,10 +13,20 @@ function Button({
     highlighted,
     tooltipId,
     disabled,
+    accent,
     onClick
 }: ButtonProps) {
+    // Buttons on a coloured background keep white text and icons
+    const accentColours: unknown[] = [
+        ButtonColour.BLUE, ButtonColour.RED, ButtonColour.GREEN
+    ];
+
+    const isAccent = accent || accentColours.includes(style?.backgroundColor);
+
     return <button
-        className={`${styles.button} ${className}`}
+        className={`${styles.button} ${isAccent ? styles.accent : ""} ${
+            className || ""
+        }`}
         style={{
             filter: disabled
                 ? "brightness(0.55)"
@@ -26,6 +37,7 @@ function Button({
         disabled={disabled}
         onClick={onClick}
         data-tooltip-id={tooltipId}
+        data-accent={isAccent || undefined}
     >
         {icon && <img
             src={icon}

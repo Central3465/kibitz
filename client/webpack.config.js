@@ -51,7 +51,17 @@ module.exports = {
                 ]
             },
             {
+                // Kept as files with a recognisable path, so that
+                // CSS can recolour them for the light theme
+                test: /img[\\/]interface[\\/].+\.svg$/i,
+                type: "asset/resource",
+                generator: {
+                    filename: "img/interface/[name].[contenthash:8][ext]"
+                }
+            },
+            {
                 test: /\.(png|svg|gif|ttf|mp3)$/i,
+                exclude: /img[\\/]interface[\\/].+\.svg$/i,
                 type: "asset"
             }
         ]

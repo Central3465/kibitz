@@ -21,7 +21,7 @@
     column-width: 130px;
 
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: var(--ui-well);
 }
 
 .language {
@@ -33,6 +33,6 @@
 }
 
 .language:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--ui-hover);
 }
 

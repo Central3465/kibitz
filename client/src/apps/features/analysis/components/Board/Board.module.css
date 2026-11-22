@@ -123,13 +123,17 @@
     transition: opacity 0.2s ease;
 }
 
+.turnIndicator {
+    border: 1.5px solid var(--ui-text-faint);
+    box-sizing: border-box;
+}
+
 .turnIndicator[data-colour="white"] {
-    background-color: #f2f2f2;
+    background-color: #ffffff;
 }
 
 .turnIndicator[data-colour="black"] {
-    border: 2px solid #f2f2f2;
-    box-sizing: border-box;
+    background-color: #15181d;
 }
 
 .toMove {

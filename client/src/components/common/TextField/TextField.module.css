@@ -14,7 +14,7 @@
     outline-style: outset;
     background-color: var(--ui-shade-2);
     font-size: 1.1rem;
-    color: white;
+    color: var(--ui-text);
 
     transition: outline-color 0.3s ease;
 }

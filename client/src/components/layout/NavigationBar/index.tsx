@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import Typography from "@/components/Typography";
 import Icon, { IconName } from "@/components/common/Icon";
+import useThemeStore from "@/stores/ThemeStore";
 
 import * as styles from "./NavigationBar.module.css";
 
@@ -21,6 +22,12 @@ function NavigationBar() {
     const { t } = useTranslation("common");
 
     const [ drawerOpen, setDrawerOpen ] = useState(false);
+
+    const { theme, toggleTheme } = useThemeStore();
+
+    const themeLabel = theme == "dark"
+        ? t("theme.switchToLight")
+        : t("theme.switchToDark");
 
     const links: NavigationLink[] = [
         { url: "/analysis", icon: "analysis", label: t("sidebar.analysis") },
@@ -82,6 +89,15 @@ function NavigationBar() {
         </div>
 
         <div className={styles.section}>
+            <button
+                className={styles.iconButton}
+                onClick={toggleTheme}
+                title={themeLabel}
+                aria-label={themeLabel}
+            >
+                <Icon name={theme == "dark" ? "sun" : "moon"} />
+            </button>
+
             <a
                 href="/help"
                 className={`${styles.iconButton} ${styles.desktopOnly}`}

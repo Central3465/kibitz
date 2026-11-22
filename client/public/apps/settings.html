@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Analyse your Chess games with move classifications, for free.">
     <meta name="theme-color" content="#14171c">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="dark light">
 
     <meta property="og:title" content="Kibitz">
     <meta property="og:image" content="/img/logo.svg">
@@ -14,6 +14,20 @@
     <link rel="icon" type="image/svg+xml" href="/img/logo.svg">
 
     <title>Settings - Kibitz</title>
+
+    <script>
+        // Apply the colour theme before the page renders to avoid a flash
+        (function() {
+            var theme;
+            try { theme = localStorage.getItem("kibitz_theme"); } catch (e) {}
+            if (theme != "light" && theme != "dark") {
+                theme = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+            }
+            document.documentElement.dataset.theme = theme;
+            document.querySelector("meta[name=theme-color]")
+                .setAttribute("content", theme == "light" ? "#ffffff" : "#14171c");
+        })();
+    </script>
 </head>
 <body>
     <div class="root"></div>

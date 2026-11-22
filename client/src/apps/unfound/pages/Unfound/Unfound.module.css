@@ -9,7 +9,7 @@
     padding: 30px;
     width: 100%;
 
-    color: white;
+    color: var(--ui-text);
 }
 
 .errorCode {
@@ -25,5 +25,5 @@
 }
 
 .returnLink {
-    color: white;
+    color: var(--ui-text);
 }
