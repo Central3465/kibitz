@@ -47,11 +47,12 @@ Requires **Node.js 22+**. No database or API keys are needed.
 git clone https://github.com/central3465/wintrchess.git
 cd wintrchess
 npm install
-npm run build
 npm start
 ```
 
 Then open [http://localhost:8080](http://localhost:8080).
+
+The first `npm start` builds the project automatically, which takes about a minute. After changing the code, run `npm run dev` to rebuild everything and start the server, or `npm run build` to only rebuild.
 
 ### With Docker
 
@@ -81,6 +82,8 @@ This is an npm workspaces monorepo:
 Useful scripts:
 
 ```sh
+npm start                  # start the server (builds first if needed)
+npm run dev                # rebuild everything, then start
 npm run build              # build every package
 npm run build -w client    # build a single package (shared, server or client)
 npm run lint               # lint the codebase

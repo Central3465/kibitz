@@ -5,10 +5,10 @@
         "./client"
     ],
     "scripts": {
+        "prestart": "node scripts/ensure-build.js",
         "start": "node server/dist/index.js",
         "build": "npm run build --workspaces --if-present",
-        "bbuild": "npm run build -w shared && npm run build -w server",
-        "dev": "npm run build && npm start",
+        "dev": "npm run build && npm run start",
         "lint": "eslint ."
     },
     "devDependencies": {

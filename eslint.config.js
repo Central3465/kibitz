@@ -2,6 +2,8 @@ const tsEslint = require("typescript-eslint");
 const tsStylistic = require("@stylistic/eslint-plugin-ts");
 
 module.exports = tsEslint.config({
+    ignores: ["**/dist/**", "**/node_modules/**"]
+}, {
     files: [
         "**/*.ts",
         "**/*.tsx"

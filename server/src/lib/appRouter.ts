@@ -2,6 +2,8 @@ import { Request, RequestHandler, Response } from "express";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 
+import { clientPublicPath } from "./paths";
+
 type PlaceholderGenerator = (req: Request, res: Response) => (
     Promise<Record<string, string>>
 );
@@ -12,7 +14,7 @@ function appRouter(
 ): RequestHandler {
     if (!getPlaceholders) {
         return async (req, res) => res.sendFile(
-            resolve(`client/public/apps/${filepath}`)
+            resolve(clientPublicPath, "apps", filepath)
         );
     }
 
@@ -22,7 +24,7 @@ function appRouter(
         );
 
         let htmlContent = readFileSync(
-            `client/public/apps/${filepath}`, "utf-8"
+            resolve(clientPublicPath, "apps", filepath), "utf-8"
         );
 
         for (const [ key, value ] of placeholders) {
