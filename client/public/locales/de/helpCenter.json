@@ -1,9 +1,6 @@
 {
     "title": "Hilfezentrum",
-    "contact": {
-        "title": "Kontaktiere uns",
-        "message": "Wenn Sie uns kontaktieren möchten, können Sie eine E-Mail senden an:"
-    },
+    "contact": {},
     "analysis": {
         "title": "Analysiere ein Spiel",
         "part1": "Du kannst deine Schachpartien auf der WintrChess Analyseseite Analyseseite",

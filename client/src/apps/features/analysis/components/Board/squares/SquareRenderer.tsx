@@ -10,6 +10,7 @@ import {
     CustomSquareProps,
     CustomSquareRenderer
 } from "react-chessboard/dist/chessboard/types";
+import { Chess, KING, Square } from "chess.js";
 
 import { StateTreeNode } from "shared/types/game/position/StateTreeNode";
 import { parseUciMove } from "shared/lib/utils/chess";
@@ -20,6 +21,8 @@ import {
 
 import { SquaresContext } from "./SquaresContext";
 import * as styles from "./Square.module.css";
+
+const defaultHighlightColour = "#f7d84a";
 
 function getSquareElements(children: ReactNode) {
     const squareElements = Children.toArray(children);
@@ -35,10 +38,35 @@ function getSquareElements(children: ReactNode) {
     return [ piece, ...notations ];
 }
 
+function getCheckedKingSquare(fen: string): Square | undefined {
+    try {
+        const board = new Chess(fen);
+        if (!board.inCheck()) return;
+
+        return board.findPiece({ type: KING, color: board.turn() }).at(0);
+    } catch {
+        return;
+    }
+}
+
 function createSquareRenderer(
     node: StateTreeNode,
     enableClassifications: boolean
 ) {
+    const playedMove = node.state.move?.uci
+        ? parseUciMove(node.state.move.uci)
+        : undefined;
+
+    const classification = enableClassifications
+        ? node.state.classification
+        : undefined;
+
+    const highlightColour = classification
+        ? classificationColours[classification]
+        : defaultHighlightColour;
+
+    const checkedKingSquare = getCheckedKingSquare(node.state.fen);
+
     return forwardRef<HTMLDivElement, CustomSquareProps>((
         { children, style, square }, ref
     ) => {
@@ -49,26 +77,34 @@ function createSquareRenderer(
             squares.setPieceDropFlag(false);
         }, [squares.pieceDropFlag]);
 
-        const playedMove = node.state.move?.uci
-            ? parseUciMove(node.state.move.uci)
-            : undefined;
-
-        const highlightColour = node.state.classification
-            ? classificationColours[node.state.classification]
-            : "#ffff33";
-
         const [ piece, ...notations ] = getSquareElements(children);
 
+        const isPlayedSquare = square == playedMove?.from
+            || square == playedMove?.to;
+
         return <div ref={ref} style={{ ...style, position: "relative" }}>
-            {(!squares.pieceDropFlag || square != playedMove?.from) && piece}
+            {isPlayedSquare && <div
+                className={styles.playedHighlight}
+                style={{ backgroundColor: highlightColour }}
+            />}
+
+            {square == squares.selected && <div
+                className={styles.selectedHighlight}
+            />}
+
+            {square == checkedKingSquare && <div
+                className={styles.checkHighlight}
+            />}
+
+            {squares.highlighted.includes(square)
+                && <div className={styles.highlight} />
+            }
+
+            {(!squares.pieceDropFlag || square != playedMove?.from)
+                && <div className={styles.piece}>{piece}</div>
+            }
 
             {notations}
-
-            {(square == playedMove?.from || square == playedMove?.to)
-                && <div className={styles.playedHighlight} style={{
-                    backgroundColor: highlightColour
-                }}/>
-            }
 
             {squares.playable.includes(square) && <div
                 className={styles.playableMoveCircle}
@@ -78,18 +114,13 @@ function createSquareRenderer(
                 className={styles.capturableMoveCircle}
             />}
 
-            {squares.highlighted.includes(square)
-                && <div className={styles.highlight} />
-            }
-
-            {node.state.classification
-                && square == playedMove?.to
-                && enableClassifications
-                && <img
-                    src={classificationImages[node.state.classification]}
-                    className={styles.classification}
-                />
-            }
+            {classification && square == playedMove?.to && <img
+                key={node.id}
+                src={classificationImages[classification]}
+                className={styles.classification}
+                draggable={false}
+                alt={classification}
+            />}
         </div>;
     }) as CustomSquareRenderer;
 }

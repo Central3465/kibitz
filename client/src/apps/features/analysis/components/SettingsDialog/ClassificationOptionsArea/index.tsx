@@ -2,15 +2,31 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { Classification } from "shared/constants/Classification";
-import { classificationNames } from "@analysis/constants/classifications";
+import {
+    classificationImages,
+    classificationNames
+} from "@analysis/constants/classifications";
 import useSettingsStore from "@/stores/SettingsStore";
 import SwitchSetting from "@/components/settings/SwitchSetting";
 
 import * as styles from "../SettingsDialog.module.css";
 
-import iconClassificationsBrilliant from "@assets/img/classifications/brilliant.png";
-import iconClassificationsCritical from "@assets/img/classifications/critical.png";
-import iconClassificationsTheory from "@assets/img/classifications/theory.png";
+type OptionalClassification = "brilliant" | "critical" | "theory" | "miss";
+
+const optionalClassifications: {
+    key: OptionalClassification;
+    classification: Classification;
+    label?: string;
+}[] = [
+    { key: "brilliant", classification: Classification.BRILLIANT },
+    { key: "critical", classification: Classification.CRITICAL },
+    { key: "miss", classification: Classification.MISS },
+    {
+        key: "theory",
+        classification: Classification.THEORY,
+        label: "settings.classifications.theory"
+    }
+];
 
 function ClassificationOptionsArea() {
     const { t } = useTranslation("analysis");
@@ -36,79 +52,38 @@ function ClassificationOptionsArea() {
             />
         </div>
 
-        <div className={styles.setting}>
-            <div className={styles.subsetting}>
-                <img
-                    className={styles.settingIcon}
-                    src={iconClassificationsBrilliant}
+        {optionalClassifications.map(option => (
+            <div className={styles.setting} key={option.key}>
+                <div className={styles.subsetting}>
+                    <img
+                        className={styles.settingIcon}
+                        src={classificationImages[option.classification]}
+                    />
+
+                    <span>
+                        {t(option.label
+                            || classificationNames[option.classification]
+                        )}
+                    </span>
+                </div>
+
+                <SwitchSetting
+                    defaultChecked={
+                        settings.analysis.classifications.included[option.key]
+                    }
+                    disabled={option.key == "critical"
+                        && settings.analysis.engine.lines < 2
+                    }
+                    onChange={checked => (
+                        setSettings(draft => {
+                            draft.analysis.classifications
+                                .included[option.key] = checked;
+                            return draft;
+                        })
+                    )}
                 />
-
-                <span>
-                    {t(classificationNames[Classification.BRILLIANT])}
-                </span>
             </div>
-
-            <SwitchSetting
-                defaultChecked={
-                    settings.analysis.classifications.included.brilliant
-                }
-                onChange={checked => (
-                    setSettings(draft => {
-                        draft.analysis.classifications.included.brilliant = checked;
-                        return draft;
-                    })
-                )}
-            />
-        </div>
-
-        <div className={styles.setting}>
-            <div className={styles.subsetting}>
-                <img
-                    className={styles.settingIcon}
-                    src={iconClassificationsCritical}
-                />
-
-                <span>
-                    {t(classificationNames[Classification.CRITICAL])}
-                </span>
-            </div>
-
-            <SwitchSetting
-                defaultChecked={
-                    settings.analysis.classifications.included.critical
-                }
-                disabled={settings.analysis.engine.lines < 2}
-                onChange={checked => (
-                    setSettings(draft => {
-                        draft.analysis.classifications.included.critical = checked;
-                        return draft;
-                    })
-                )}
-            />
-        </div>
-
-        <div className={styles.setting}>
-            <div className={styles.subsetting}>
-                <img
-                    className={styles.settingIcon}
-                    src={iconClassificationsTheory}
-                />
-
-                <span>
-                    {t("settings.classifications.theory")}
-                </span>
-            </div>
-
-            <SwitchSetting
-                defaultChecked={settings.analysis.classifications.included.theory}
-                onChange={checked => (
-                    setSettings(draft => {
-                        draft.analysis.classifications.included.theory = checked;
-                        return draft;
-                    })
-                )}
-            />
-        </div>
+        ))}
     </>;
 }
 

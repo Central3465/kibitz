@@ -19,8 +19,7 @@ import ClassificationCountCardProps from "./ClassificationCountCardProps";
 import * as styles from "./ClassificationCountCard.module.css";
 
 const excludedClassifications = [
-    Classification.FORCED,
-    Classification.RISKY
+    Classification.FORCED
 ];
 
 function ClassificationCountCard({ analysisGame }: ClassificationCountCardProps) {

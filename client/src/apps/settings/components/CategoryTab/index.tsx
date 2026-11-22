@@ -11,14 +11,16 @@ function CategoryTab({
     onClick
 }: CategoryTabProps) {
     return <div
-        className={`${styles.wrapper} ${className}`}
-        style={{
-            ...style,
-            backgroundColor: active
-                ? "rgba(255, 255, 255, 0.1)"
-                : undefined
-        }}
+        className={`${styles.wrapper} ${active ? styles.active : ""} ${
+            className || ""
+        }`}
+        style={style}
+        role="button"
+        tabIndex={0}
         onClick={onClick}
+        onKeyDown={event => {
+            if (event.key == "Enter") onClick?.();
+        }}
     >
         {children}
     </div>;

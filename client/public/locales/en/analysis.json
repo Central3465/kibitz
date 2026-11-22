@@ -3,9 +3,9 @@
     "optionsToolbar": {
         "flipBoard": "Flip Board",
         "share": "Share Game",
-        "save": "Save to Archive",
-        "noArchiveStorage": "You can only store up to 50 games in your Game Archive.",
-        "gameArchived": "Game successfully archived!"
+        "save": "Save game",
+        "noArchiveStorage": "You can store up to {{amount}} saved games. Delete some to make room.",
+        "gameArchived": "Game saved to this device!"
     },
     "settings": {
         "title": "Analysis Settings",
@@ -98,13 +98,8 @@
     },
     "progressReporter": {
         "evaluating": "Evaluating...",
-        "awaitingCaptcha": "Solving the CAPTCHA...",
         "classifying": "Classifying...",
         "evaluatingTooltip": "If this takes a while, you can try lowering the engine depth in the settings.",
-        "captchaTooltip": "This might take a few seconds...",
-        "captchaVerifyFailed": "Could not verify the CAPTCHA; try refreshing the page.",
-        "captchaLoadFailed": "Could not load the CAPTCHA. Your browser is likely outdated.",
-        "captchaUnknownError": "Unknown CAPTCHA error; try refreshing the page.",
         "reportFailed": "Unknown error while generating the game report; try refreshing the page.",
         "completeNotification": "Analysis Complete"
     },
@@ -129,7 +124,7 @@
             "blunder": "is a blunder",
             "forced": "is forced",
             "theory": "is theory",
-            "risky": "is a risky idea"
+            "miss": "is a missed opportunity"
         },
         "alternative": "The best move was"
     },
@@ -144,6 +139,6 @@
         "blunder": "Blunder",
         "forced": "Forced",
         "theory": "Theory",
-        "risky": "Risky"
+        "miss": "Miss"
     }
 }

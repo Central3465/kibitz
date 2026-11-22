@@ -1,30 +1,62 @@
 @font-face {
     font-family: "JetBrains Mono";
     src: url("../public/fonts/jetbrainsmono.ttf");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "Noto Sans";
     src: url("../public/fonts/notosans.ttf");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "Nunito";
-    src: url("../public/fonts/nunito.ttf")
+    src: url("../public/fonts/nunito.ttf");
+    font-display: swap;
 }
 
 :root {
-    --ui-blue: #467de8;
-    --ui-lavender: #625eb1;
-    --ui-shade-1: #101216;
-    --ui-shade-2: #17191e;
-    --ui-shade-3: #1f2125;
-    --ui-shade-4: #2c2f35;
-    --ui-shade-5: #3b3e43;
-    --ui-shade-6: #3e4349;
-    --ui-shade-7: #50575f;
+    /* Accents */
+    --ui-blue: #4c8dff;
+    --ui-blue-hover: #6aa0ff;
+    --ui-lavender: #7b77d1;
+    --ui-green: #5fb87a;
+    --ui-red: #e5534b;
 
-    --rt-color-dark: #111 !important;
+    /* Surfaces, darkest to lightest */
+    --ui-shade-1: #0e1014;
+    --ui-shade-2: #14171c;
+    --ui-shade-3: #1a1e24;
+    --ui-shade-4: #22272f;
+    --ui-shade-5: #2b313a;
+    --ui-shade-6: #353c47;
+    --ui-shade-7: #48505d;
+
+    /* Text */
+    --ui-text: #e9ecf1;
+    --ui-text-muted: #9aa3b1;
+    --ui-text-faint: #6b7381;
+
+    /* Shape */
+    --ui-border: rgba(255, 255, 255, 0.07);
+    --ui-radius-sm: 8px;
+    --ui-radius: 12px;
+    --ui-radius-lg: 16px;
+    --ui-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+    --ui-font: "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --ui-navbar-height: 60px;
+
+    --rt-color-dark: #000 !important;
+    --rt-opacity: 0.95 !important;
+
+    color-scheme: dark;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
@@ -32,23 +64,57 @@ body {
     overflow-x: hidden;
 
     background-color: var(--ui-shade-1);
+    color: var(--ui-text);
+    font-family: var(--ui-font);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
 }
 
 * {
-    font-family: "Noto Sans";
+    font-family: var(--ui-font);
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+a {
+    color: var(--ui-blue);
+}
+
+:focus-visible {
+    outline: 2px solid var(--ui-blue);
+    outline-offset: 2px;
+}
+
+::selection {
+    background-color: rgba(76, 141, 255, 0.35);
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
 
-    background-color: #424242;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: white;
+    border-radius: 8px;
+    background-color: var(--ui-shade-6);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--ui-shade-7);
 }
 
 ::-webkit-scrollbar-corner {
-    background-color: #919191;
+    background-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
 }

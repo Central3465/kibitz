@@ -1,9 +1,6 @@
 {
     "title": "Centrum pomocy",
-    "contact": {
-        "title": "Skontaktuj się z nami",
-        "message": "Jeśli chcesz się z nami skontaktować, możesz wysłać wiadomość e-mail na adres:"
-    },
+    "contact": {},
     "analysis": {
         "title": "Analizowanie gry",
         "part1": "Możesz analizować swoje gry w szachy",

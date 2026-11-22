@@ -7,17 +7,12 @@
     "enabled": "Bật",
     "disabled": "Tắt",
     "navigationBar": {
-        "support": "Hỗ trợ",
-        "signIn": "Đăng nhập",
         "tooltips": {
-            "support": "Hỗ trợ chúng tôi ❤",
             "help": "Trung tâm Trợ giúp"
         }
     },
     "sidebar": {
-        "analysis": "Phân tích",
-        "archive": "Lưu trữ",
-        "news": "Tin tức"
+        "analysis": "Phân tích"
     },
     "footer": {
         "manageConsent": "Quản lý sự đồng ý",

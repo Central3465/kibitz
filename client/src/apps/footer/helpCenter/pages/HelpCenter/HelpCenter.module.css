@@ -2,51 +2,103 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-
-    width: 100%;
-    text-align: center;
-    padding: 30px;
+    gap: 16px;
+    margin: 0 auto;
+    padding: 24px 16px;
     box-sizing: border-box;
+    width: min(860px, 100%);
+
+    color: var(--ui-text);
+    line-height: 1.6;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 600px) {
     .wrapper {
-        padding: 30px 0;
+        padding: 16px 0;
     }
-}
-
-.wrapper * {
-    color: white;
 }
 
 .section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding: 20px;
-
-    background-color: var(--ui-shade-2);
-
+    gap: 16px;
+    padding: 24px;
     box-sizing: border-box;
     width: 100%;
+
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    background-color: var(--ui-shade-3);
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .section {
+        padding: 18px 14px;
+
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+}
+
+.section > span, .section > div > span {
+    color: var(--ui-text-muted);
+}
+
+.section a {
+    color: var(--ui-blue);
 }
 
 .importantValue {
-    display: inline;
-    padding: 5px 15px;
-    box-sizing: border-box;
+    display: inline-block;
+    padding: 8px 16px;
 
-    border-radius: 5px;
-    background-color: var(--ui-shade-3);
-    color: white;
-    font-size: 1.1rem;
+    border-radius: var(--ui-radius-sm);
+    background-color: var(--ui-shade-5);
+    color: var(--ui-text) !important;
+    text-decoration: none;
 
-    cursor: pointer;
-    transition-duration: 0.3s;
+    transition: background-color 0.2s;
 }
 
 .importantValue:hover {
+    background-color: var(--ui-shade-6);
+}
+
+.classifications {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: 10px;
+    width: 100%;
+
+    text-align: left;
+}
+
+.classification {
+    display: flex;
+    align-items: start;
+    gap: 12px;
+    padding: 12px;
+
+    border-radius: var(--ui-radius);
     background-color: var(--ui-shade-4);
+}
+
+.classification > img {
+    flex-shrink: 0;
+}
+
+.classification > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
+.classification span {
+    color: var(--ui-text-muted);
 }

@@ -1,9 +1,6 @@
 {
     "title": "Central de Ajuda",
-    "contact": {
-        "title": "Contate-nos",
-        "message": "Se precisar entrar em contato conosco, pode enviar um e-mail para:"
-    },
+    "contact": {},
     "analysis": {
         "title": "Analisando um jogo",
         "part1": "Você pode analisar suas partidas de xadrez no",

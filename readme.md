@@ -27,7 +27,7 @@ The WintrChess repository is a monorepo made up of three packages:
 The frontend for the website built with React and TypeScript.
 
 #### `server`
-The backend for the website where the website content is served, and where any API endpoints will live.
+A small static file server for the website. There is no database, account system or server-side API: analysis, move classification and saved games all live in the browser.
 
 #### `shared`
 Libraries, some types and common logic is stored here and can be accessed by both other packages.

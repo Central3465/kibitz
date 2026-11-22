@@ -6,12 +6,23 @@ interface ExpectedPointsOptions {
     centipawnGradient?: number;
 }
 
+/**
+ * Logistic gradient mapping centipawns to win probability. Calibrated
+ * against large game databases (approximately the curve used by Lichess).
+ */
+export const defaultCentipawnGradient = 0.00368208;
+
+/**
+ * @description Returns the expected points (win probability) for White
+ * of a given evaluation. `moveColour` is the colour that just moved, used
+ * to resolve evaluations of mate in 0 (checkmate on the board).
+ */
 export function getExpectedPoints(
     evaluation: Evaluation,
     options?: ExpectedPointsOptions
 ) {
     const opts = {
-        centipawnGradient: 0.0035,
+        centipawnGradient: defaultCentipawnGradient,
         ...options
     };
 
@@ -26,6 +37,20 @@ export function getExpectedPoints(
             -opts.centipawnGradient * evaluation.value
         ));
     }
+}
+
+/**
+ * @description Returns the expected points of an evaluation from the
+ * perspective of the given colour.
+ */
+export function getSubjectiveExpectedPoints(
+    evaluation: Evaluation,
+    colour: PieceColour,
+    moveColour = colour
+) {
+    const points = getExpectedPoints(evaluation, { moveColour });
+
+    return colour == PieceColour.WHITE ? points : 1 - points;
 }
 
 export function getExpectedPointsLoss(

@@ -7,17 +7,12 @@
     "enabled": "已启用",
     "disabled": "已禁用",
     "navigationBar": {
-        "support": "支持",
-        "signIn": "登入",
         "tooltips": {
-            "support": "支持我们❤",
             "help": "帮助中心"
         }
     },
     "sidebar": {
-        "analysis": "复盘分析",
-        "archive": "存档",
-        "news": "新闻"
+        "analysis": "复盘分析"
     },
     "footer": {
         "privacyPolicy": "隐私政策"

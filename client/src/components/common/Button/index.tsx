@@ -18,8 +18,8 @@ function Button({
         className={`${styles.button} ${className}`}
         style={{
             filter: disabled
-                ? "brightness(0.6)"
-                : (highlighted ? "brightness(0.9)" : undefined),
+                ? "brightness(0.55)"
+                : (highlighted ? "brightness(1.15)" : undefined),
             cursor: disabled ? "default" : undefined,
             ...style
         }}

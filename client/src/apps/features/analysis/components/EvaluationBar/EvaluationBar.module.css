@@ -1,17 +1,30 @@
 .evaluationBar {
     position: relative;
-    min-width: 40px;
+    width: 24px;
+
+    border-radius: 4px;
+    background-color: #2a2d33;
+    overflow: hidden;
 }
 
-.overBar {
+.whiteFill {
+    position: absolute;
+    left: 0;
     width: 100%;
 
-    transition: height 0.5s ease-out
+    background-color: #f1f1f1;
+
+    transition: height 0.45s ease-out;
 }
 
 .evaluationText {
-    display: flex;
-    justify-content: center;
     position: absolute;
+    left: 0;
     width: 100%;
+    z-index: 1;
+
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
 }

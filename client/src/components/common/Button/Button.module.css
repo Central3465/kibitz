@@ -2,20 +2,28 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
+    gap: 8px;
+    padding: 9px 14px;
+    min-height: 40px;
+    box-sizing: border-box;
 
-    border: none;
-    border-radius: 10px;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-sm);
     background-color: var(--ui-shade-5);
-    color: white;
-    font-size: 1.1rem;
+    color: var(--ui-text);
+    font-size: 1rem;
+    font-weight: 500;
 
     cursor: pointer;
+    touch-action: manipulation;
 
-    transition: filter 0.3s ease;
+    transition: filter 0.2s ease, background-color 0.2s ease, transform 0.1s ease;
 }
 
 .button:hover {
-    filter: brightness(0.9);
+    filter: brightness(1.15);
+}
+
+.button:active:not(:disabled) {
+    transform: scale(0.97);
 }

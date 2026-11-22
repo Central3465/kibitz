@@ -4,19 +4,27 @@ import { Piece, Square } from "react-chessboard/dist/chessboard/types";
 import { Chess, Move, PieceSymbol } from "chess.js";
 
 import { defaultRootNode } from "shared/constants/utils";
+import { PieceColour } from "shared/constants/PieceColour";
 import { isMovePromotion } from "shared/lib/utils/chess";
 import useResizeObserver from "@/hooks/useResizeObserver";
-import PlayerProfile from "@/components/chess/PlayerProfile";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import EvaluationBar from "../EvaluationBar";
 
 import { useSquares } from "./squares/useSquares";
 import createSquareRenderer from "./squares/SquareRenderer";
 import { SquaresContext } from "./squares/SquaresContext";
+import { getMaterialAdvantage, getTurnColour } from "./material";
+import PlayerBar from "./PlayerBar";
 
 import BoardProps from "./BoardProps";
 import * as styles from "./Board.module.css";
 
 type ClickMove = Pick<Move, "from" | "to">;
+
+// Must match the sizes defined in Board.module.css
+const playerBarHeight = 44;
+const evaluationBarWidth = 24;
+const evaluationBarGap = 8;
 
 function getPieceType(piece: Piece) {
     return piece.at(1)?.toLowerCase() as PieceSymbol;
@@ -25,8 +33,6 @@ function getPieceType(piece: Piece) {
 function Board({
     className,
     style,
-    profileClassName,
-    profileStyle,
     whiteProfile,
     blackProfile,
     theme,
@@ -46,11 +52,50 @@ function Board({
 
     const [ heldPromotion, setHeldPromotion ] = useState<ClickMove>();
 
-    const boardContainerRef = useRef<HTMLDivElement | null>(null);
-    const { fullWidth: boardWidth } = useResizeObserver(boardContainerRef, 1);
+    // Fit the largest square board into the available space
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
-    const topProfile = flipped ? whiteProfile : blackProfile;
-    const bottomProfile = flipped ? blackProfile : whiteProfile;
+    const {
+        innerWidth: containerWidth,
+        innerHeight: containerHeight
+    } = useResizeObserver(containerRef, 0);
+
+    const horizontalSpace = containerWidth - (evaluation
+        ? evaluationBarWidth + evaluationBarGap : 0
+    );
+
+    // On narrow screens the board takes the full width and the page
+    // scrolls; on wider screens it must also fit the available height
+    const fitHeight = useMediaQuery("(min-width: 901px)");
+
+    const verticalSpace = containerHeight - playerBarHeight * 2;
+
+    const boardWidth = Math.max(
+        Math.floor(fitHeight && verticalSpace > 0
+            ? Math.min(horizontalSpace, verticalSpace)
+            : horizontalSpace
+        ),
+        120
+    );
+
+    // Player bars
+    const turnColour = getTurnColour(node.state.fen);
+
+    const topColour = flipped ? PieceColour.WHITE : PieceColour.BLACK;
+    const bottomColour = flipped ? PieceColour.BLACK : PieceColour.WHITE;
+
+    const profileOf = (colour: PieceColour) => (
+        colour == PieceColour.WHITE ? whiteProfile : blackProfile
+    );
+
+    function renderPlayerBar(colour: PieceColour) {
+        return <PlayerBar
+            profile={profileOf(colour)}
+            colour={colour}
+            materialAdvantage={getMaterialAdvantage(node.state.fen, colour)}
+            toMove={turnColour == colour}
+        />;
+    }
 
     function onSquareClick(square: Square, piece?: Piece) {
         squares.setHighlighted([]);
@@ -77,7 +122,12 @@ function Board({
                 from: squares.selected,
                 to: square
             });
+
+            return;
         }
+
+        squares.setSelected(undefined);
+        squares.clearPlayable();
 
         addMove(squares.selected, square);
     }
@@ -85,13 +135,15 @@ function Board({
     function onPromotionPieceSelect(
         piece?: Piece, from?: Square, to?: Square
     ) {
-        if (!piece || !to) return false;
-
         setHeldPromotion(undefined);
+        squares.setSelected(undefined);
+        squares.clearPlayable();
+
+        if (!piece || !to) return false;
 
         const fromSquare = heldPromotion?.from || from;
         if (!fromSquare) return false;
-        
+
         return addMove(fromSquare, to, getPieceType(piece));
     }
 
@@ -112,66 +164,93 @@ function Board({
     }
 
     return <div
-        className={`${styles.wrapper} ${className}`}
+        className={`${styles.wrapper} ${className || ""}`}
         style={style}
+        ref={containerRef}
     >
-        {topProfile && <div
-            className={`${styles.profile} ${profileClassName}`}
-            style={{ borderRadius: "7px 7px 0 0", ...profileStyle }}
+        <div
+            className={styles.boardColumn}
+            style={{
+                width: boardWidth + (evaluation
+                    ? evaluationBarWidth + evaluationBarGap : 0
+                )
+            }}
         >
-            <PlayerProfile profile={topProfile} />
-        </div>}
+            <div className={styles.playerRow} style={{
+                paddingLeft: evaluation
+                    ? evaluationBarWidth + evaluationBarGap : 0
+            }}>
+                {renderPlayerBar(topColour)}
+            </div>
 
-        <div className={styles.boardContainer} ref={boardContainerRef}>
-            {evaluation && <EvaluationBar
-                evaluation={evaluation}
-                moveColour={node.state.moveColour}
-                flipped={flipped}
-            />}
+            <div className={styles.boardRow}>
+                {evaluation && <EvaluationBar
+                    className={styles.evaluationBar}
+                    style={{ height: boardWidth }}
+                    evaluation={evaluation}
+                    moveColour={node.state.moveColour}
+                    flipped={flipped}
+                />}
 
-            <SquaresContext.Provider value={squares}>
-                <Chessboard
-                    position={node.state.fen}
-                    boardOrientation={flipped ? "black" : "white"}
-                    onSquareClick={onSquareClick}
-                    onSquareRightClick={squares.toggleHighlight}
-                    onPieceDragBegin={(piece, square) => {
-                        squares.setSelected(square);
-                        squares.loadPlayable(node.state.fen, square);
-                    }}
-                    onPieceDrop={(from, to, piece) => {
-                        squares.setSelected(undefined);
-                        squares.clearPlayable();
+                <div
+                    className={styles.board}
+                    style={{ width: boardWidth, height: boardWidth }}
+                >
+                    <SquaresContext.Provider value={squares}>
+                        <Chessboard
+                            position={node.state.fen}
+                            boardOrientation={flipped ? "black" : "white"}
+                            onSquareClick={onSquareClick}
+                            onSquareRightClick={squares.toggleHighlight}
+                            onPieceDragBegin={(piece, square) => {
+                                squares.setSelected(square);
+                                squares.loadPlayable(node.state.fen, square);
+                            }}
+                            onPieceDrop={(from, to, piece) => {
+                                squares.setSelected(undefined);
+                                squares.clearPlayable();
 
-                        return addMove(from, to, getPieceType(piece), true);
-                    }}
-                    onPromotionPieceSelect={onPromotionPieceSelect}
-                    customSquare={squareRenderer}
-                    customArrows={arrows}
-                    arePiecesDraggable={piecesDraggable}
-                    customLightSquareStyle={theme?.lightSquareColour
-                        ? { backgroundColor: theme.lightSquareColour }
-                        : undefined
-                    }
-                    customDarkSquareStyle={theme?.darkSquareColour
-                        ? { backgroundColor: theme.darkSquareColour }
-                        : undefined
-                    }
-                    animationDuration={165}
-                    showPromotionDialog={!!heldPromotion}
-                    promotionToSquare={heldPromotion?.to}
-                    promotionDialogVariant="vertical"
-                    boardWidth={boardWidth - (evaluation ? 40 : 0)}
-                />
-            </SquaresContext.Provider>
+                                return addMove(
+                                    from, to, getPieceType(piece), true
+                                );
+                            }}
+                            onPromotionPieceSelect={onPromotionPieceSelect}
+                            customSquare={squareRenderer}
+                            customArrows={arrows}
+                            customArrowColor="rgba(255, 170, 0, 0.85)"
+                            arePiecesDraggable={piecesDraggable}
+                            customNotationStyle={{
+                                fontSize: `${Math.max(9, boardWidth / 48)}px`,
+                                fontWeight: "600"
+                            }}
+                            customLightSquareStyle={theme?.lightSquareColour
+                                ? { backgroundColor: theme.lightSquareColour }
+                                : undefined
+                            }
+                            customDarkSquareStyle={theme?.darkSquareColour
+                                ? { backgroundColor: theme.darkSquareColour }
+                                : undefined
+                            }
+                            customDropSquareStyle={{
+                                boxShadow: "inset 0 0 0 4px rgba(255, 255, 255, 0.6)"
+                            }}
+                            animationDuration={180}
+                            showPromotionDialog={!!heldPromotion}
+                            promotionToSquare={heldPromotion?.to}
+                            promotionDialogVariant="vertical"
+                            boardWidth={boardWidth}
+                        />
+                    </SquaresContext.Provider>
+                </div>
+            </div>
+
+            <div className={styles.playerRow} style={{
+                paddingLeft: evaluation
+                    ? evaluationBarWidth + evaluationBarGap : 0
+            }}>
+                {renderPlayerBar(bottomColour)}
+            </div>
         </div>
-
-        {bottomProfile && <div
-            className={`${styles.profile} ${profileClassName}`}
-            style={{ borderRadius: "0 0 7px 7px", ...profileStyle }}
-        >
-            <PlayerProfile profile={bottomProfile} />
-        </div>}
     </div>;
 }
 

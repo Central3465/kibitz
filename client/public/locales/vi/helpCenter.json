@@ -1,9 +1,6 @@
 {
     "title": "Trung tâm Trợ giúp",
-    "contact": {
-        "title": "Liên hệ với chúng tôi",
-        "message": "Nếu bạn cần liên hệ với chúng tôi, bạn có thể gửi email đến địa chỉ:"
-    },
+    "contact": {},
     "analysis": {
         "title": "Đang phân tích ván đấu",
         "part1": "Bạn có thể phân tích ván đấu của bạn ở",

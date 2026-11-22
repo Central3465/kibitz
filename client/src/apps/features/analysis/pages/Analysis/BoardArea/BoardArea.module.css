@@ -1,19 +1,14 @@
 .board {
     flex-grow: 1;
     min-width: 0;
+    max-width: calc(100vh - var(--ui-navbar-height));
     height: 100%;
 }
 
 @media (max-width: 900px) {
     .board {
-        width: min(100%, calc(100vh - 190px));
-    }
-}
-
-@media (max-width: 500px) {
-    .boardProfile {
         width: 100%;
-
-        border-radius: 0 !important;
+        max-width: 640px;
+        height: auto;
     }
 }

@@ -7,16 +7,12 @@
     "enabled": "Включено",
     "disabled": "Отключено",
     "navigationBar": {
-        "support": "Поддержка",
         "tooltips": {
-            "support": "Поддержите нас ❤️",
             "help": "Центр помощи"
         }
     },
     "sidebar": {
-        "analysis": "Анализ",
-        "archive": "Архивировать",
-        "news": "Новости"
+        "analysis": "Анализ"
     },
     "confirmDialog": {
         "yes": "Да",

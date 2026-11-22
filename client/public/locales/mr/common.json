@@ -5,16 +5,12 @@
     "error": "काहीतरी चूक झाली",
     "reset": "रीसेट करा",
     "navigationBar": {
-        "support": "मदत",
         "tooltips": {
-            "support": "आमचं समर्थन करा",
             "help": "मदत केंद्र"
         }
     },
     "sidebar": {
-        "analysis": "विश्लेषण",
-        "archive": "संग्रह",
-        "news": "बातमी"
+        "analysis": "विश्लेषण"
     },
     "gameListing": {
         "gameResults": {

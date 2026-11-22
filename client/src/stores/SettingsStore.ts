@@ -24,7 +24,8 @@ const settingsSchema = z.object({
             included: z.object({
                 brilliant: z.boolean(),
                 critical: z.boolean(),
-                theory: z.boolean()
+                theory: z.boolean(),
+                miss: z.boolean()
             })
         }),
         simpleNotation: z.boolean()
@@ -59,7 +60,8 @@ export const defaultSettings: Settings = {
             included: {
                 brilliant: true,
                 critical: true,
-                theory: true
+                theory: true,
+                miss: true
             }
         },
         simpleNotation: false

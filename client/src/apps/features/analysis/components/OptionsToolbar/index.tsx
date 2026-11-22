@@ -13,12 +13,11 @@ import useAnalysisProgressStore from "../../stores/AnalysisProgressStore";
 import { useAnalysisGameStore } from "@analysis/stores/AnalysisGameStore";
 import useAnalysisBoardStore from "@analysis/stores/AnalysisBoardStore";
 import useRealtimeEngineStore from "@analysis/stores/RealtimeEngineStore";
-import { useAuthedProfile } from "@/hooks/api/useProfile";
 import Button from "@/components/common/Button";
 import SettingsDialog from "../SettingsDialog";
 import ShareDialog from "../ShareDialog";
 import displayToast from "@/lib/toast";
-import { archiveGame } from "@/lib/gameArchive";
+import { archiveGame, maximumArchiveSize } from "@/lib/gameArchive";
 
 import * as styles from "./OptionsToolbar.module.css";
 
@@ -32,8 +31,6 @@ function OptionsToolbar() {
     const { t } = useTranslation(["analysis", "common"]);
 
     const [ searchParams, setSearchParams ] = useSearchParams();
-
-    const { status: profileStatus } = useAuthedProfile();
 
     const {
         evaluationController,
@@ -99,9 +96,13 @@ function OptionsToolbar() {
             searchParams.get("game") || undefined
         );
 
+        setArchiveStatus("idle");
+
         if (archival.status == StatusCodes.INSUFFICIENT_STORAGE)
             return displayToast({
-                message: t("optionsToolbar.noArchiveStorage"),
+                message: t("optionsToolbar.noArchiveStorage", {
+                    amount: maximumArchiveSize
+                }),
                 theme: "error",
                 autoClose: false
             });
@@ -115,8 +116,6 @@ function OptionsToolbar() {
             ...Object.fromEntries(searchParams.entries()),
             game: archival.id
         });
-
-        setArchiveStatus("idle");
 
         displayToast({
             message: t("optionsToolbar.gameArchived"),
@@ -183,7 +182,7 @@ function OptionsToolbar() {
                 delayShow={500}
             />
 
-            {(gameAnalysisOpen && profileStatus == "success") && <Button
+            {gameAnalysisOpen && <Button
                 className={styles.optionButton}
                 icon={iconSave}
                 iconSize={"35px"}

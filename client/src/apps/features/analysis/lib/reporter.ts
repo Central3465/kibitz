@@ -1,72 +1,45 @@
-import { StatusCodes } from "http-status-codes";
-import { clone } from "lodash-es";
-
 import AnalysisOptions from "shared/lib/reporter/types/AnalysisOptions";
-import {
-    GameAnalysis,
-    SerializedGameAnalysis
-} from "shared/types/game/GameAnalysis";
+import { GameAnalysis } from "shared/types/game/GameAnalysis";
+import { getGameAnalysis, analyseNode as analyseSingleNode } from "shared/lib/reporter/report";
 import {
     StateTreeNode,
     serializeNode,
     deserializeNode
 } from "shared/types/game/position/StateTreeNode";
-import APIResponse from "@/types/APIResponse";
 
+/**
+ * @description Classifies every move in a state tree. Runs entirely in the
+ * browser. Returns a new tree; the given tree is not modified.
+ */
 export async function analyseStateTree(
     rootNode: StateTreeNode,
     options?: AnalysisOptions
-): APIResponse<{ gameAnalysis: GameAnalysis }> {
-    const reportURL = "/api/analysis/analyse"
-        + `?brilliant=${String(options?.includeBrilliant)}`
-        + `&critical=${String(options?.includeCritical)}`
-        + `&theory=${String(options?.includeTheory)}`;
+): Promise<GameAnalysis | undefined> {
+    // Yield to the browser so that progress UI can render first
+    await new Promise(resolve => setTimeout(resolve, 0));
 
-    const reportResponse = await fetch(reportURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
-            serializeNode(rootNode)
-        )
-    });
+    try {
+        const stateTree = deserializeNode(serializeNode(rootNode), rootNode);
 
-    if (!reportResponse.ok)
-        return { status: reportResponse.status };
-
-    const serializedAnalysis: SerializedGameAnalysis = (
-        await reportResponse.json()
-    );
-
-    return {
-        status: reportResponse.status,
-        gameAnalysis: {
-            ...serializedAnalysis,
-            stateTree: deserializeNode(
-                serializedAnalysis.stateTree,
-                rootNode
-            )
-        }
-    };
+        return getGameAnalysis(stateTree, options);
+    } catch (err) {
+        console.error(err);
+    }
 }
 
-export async function analyseNode(
+/**
+ * @description Classifies a single node in place, using the engine
+ * lines already held by it and its parent.
+ */
+export function analyseNode(
     node: StateTreeNode,
     options?: AnalysisOptions
-): APIResponse<{ node: StateTreeNode }> {
-    if (!node.parent)
-        return { status: StatusCodes.BAD_REQUEST };
+) {
+    if (!node.parent) return;
 
-    const childlessNode = clone(node);
-    childlessNode.children = [];
-
-    const parentNode = clone(node.parent);
-    parentNode.children = [childlessNode];
-
-    const reportResult = await analyseStateTree(parentNode, options);
-    const analysedNode = reportResult.gameAnalysis?.stateTree.children.at(0);
-
-    return {
-        status: reportResult.status,
-        node: analysedNode
-    };
+    try {
+        return analyseSingleNode(node, options);
+    } catch (err) {
+        console.error(err);
+    }
 }

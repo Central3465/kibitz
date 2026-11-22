@@ -3,6 +3,7 @@ import { clamp } from "lodash-es";
 
 import PieceColour from "shared/constants/PieceColour";
 import { stringifyEvaluation } from "shared/lib/utils/chess";
+import { getExpectedPoints } from "shared/lib/reporter/expectedPoints";
 
 import EvaluationBarProps from "./EvaluationBarProps";
 import * as styles from "./EvaluationBar.module.css";
@@ -21,43 +22,37 @@ function EvaluationBar({
         }, false, 1)
     ), [evaluation]);
 
-    const overBarHeight = useMemo(() => {
-        if (evaluation.type == "centipawn") {
-            return clamp(
-                50 - (evaluation.value / 20),
-                5, 95
-            );
-        } else {
-            return evaluation.value == 0
-                ? (moveColour == PieceColour.WHITE ? 0 : 100)
-                : (evaluation.value > 0 ? 0 : 100);
-        }
-    }, [evaluation]);
+    // Percentage of the bar filled by White
+    const whiteShare = useMemo(() => {
+        const points = getExpectedPoints(evaluation, {
+            moveColour: moveColour || PieceColour.WHITE
+        });
 
-    const textBottom = overBarHeight > 50 == flipped;
+        return evaluation.type == "mate"
+            ? points * 100
+            : clamp(points * 100, 4, 96);
+    }, [evaluation, moveColour]);
+
+    const whiteWinning = whiteShare >= 50;
 
     return <div
-        className={`${styles.evaluationBar} ${className}`}
-        style={{
-            backgroundColor: flipped ? "#0c0c0c" : "#fff",
-            ...style
-        }}
+        className={`${styles.evaluationBar} ${className || ""}`}
+        style={style}
+        title={evaluationText}
     >
         <div
-            className={styles.overBar}
+            className={styles.whiteFill}
             style={{
-                backgroundColor: flipped ? "#fff" : "#0c0c0c",
-                height: flipped
-                    ? `calc(100% - ${overBarHeight}%)`
-                    : `${overBarHeight}%`
+                height: `${whiteShare}%`,
+                [flipped ? "top" : "bottom"]: 0
             }}
         />
 
         <span
             className={styles.evaluationText}
             style={{
-                [textBottom ? "bottom" : "top"]: "7px",
-                color: overBarHeight > 50 ? "#fff" : "#000"
+                [(whiteWinning != flipped) ? "bottom" : "top"]: "6px",
+                color: whiteWinning ? "#1a1a1a" : "#f2f2f2"
             }}
         >
             {evaluationText}

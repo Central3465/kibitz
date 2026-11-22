@@ -1,7 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { Classification } from "shared/constants/Classification";
 import GameSelector from "@/components/chess/GameSelector";
+import {
+    classificationImages,
+    classificationNames
+} from "@analysis/constants/classifications";
 import AnalyseButton from "@analysis/components/AnalyseButton";
 
 import Header from "../../components/Header";
@@ -12,7 +17,7 @@ import iconHelpcenterMail from "@assets/img/helpCenter/mail.png";
 import iconHelpcenterAnalysis from "@assets/img/helpCenter/analysis.png";
 
 function HelpCenter() {
-    const { t } = useTranslation("helpCenter");
+    const { t } = useTranslation(["helpCenter", "analysis"]);
 
     return <div className={styles.wrapper}>
         <Header
@@ -36,9 +41,10 @@ function HelpCenter() {
 
             <a
                 className={styles.importantValue}
-                href="mailto:contact@wintrchess.com"
+                href="https://github.com/WintrCat/wintrchess/issues"
+                target="_blank"
             >
-                <b>contact@wintrchess.com</b>
+                <b>GitHub Issues</b>
             </a>
         </div>
 
@@ -75,6 +81,42 @@ function HelpCenter() {
             </span>
 
             <AnalyseButton style={{ width: "min(365px, 100%)" }} />
+        </div>
+
+        <div className={styles.section}>
+            <Header size="1.3rem">
+                {t("classifications.title")}
+            </Header>
+
+            <span>{t("classifications.intro")}</span>
+
+            <div className={styles.classifications}>
+                {Object.values(Classification).map(classification => (
+                    <div
+                        key={classification}
+                        className={styles.classification}
+                    >
+                        <img
+                            src={classificationImages[classification]}
+                            alt=""
+                            width={32}
+                            height={32}
+                        />
+
+                        <div>
+                            <b>
+                                {t(classificationNames[classification], {
+                                    ns: "analysis"
+                                })}
+                            </b>
+
+                            <span>
+                                {t(`classifications.${classification}`)}
+                            </span>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     </div>;
 }

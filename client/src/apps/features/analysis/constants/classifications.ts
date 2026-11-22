@@ -10,7 +10,7 @@ import iconClassificationsMistake from "@assets/img/classifications/mistake.png"
 import iconClassificationsBlunder from "@assets/img/classifications/blunder.png";
 import iconClassificationsForced from "@assets/img/classifications/forced.png";
 import iconClassificationsTheory from "@assets/img/classifications/theory.png";
-import iconClassificationsRisky from "@assets/img/classifications/risky.png";
+import iconClassificationsMiss from "@assets/img/classifications/miss.png";
 
 import iconClassificationsLoading from "@assets/img/classifications/loading.png";
 import iconClassificationsError from "@assets/img/classifications/error.png";
@@ -26,7 +26,7 @@ export const classificationImages = {
     [Classification.BLUNDER]: iconClassificationsBlunder,
     [Classification.FORCED]: iconClassificationsForced,
     [Classification.THEORY]: iconClassificationsTheory,
-    [Classification.RISKY]: iconClassificationsRisky
+    [Classification.MISS]: iconClassificationsMiss
 };
 
 export const loadingClassificationIcon = iconClassificationsLoading;
@@ -44,7 +44,7 @@ export const classificationColours = {
     [Classification.BLUNDER]: "#c93230",
     [Classification.FORCED]: "#97af8b",
     [Classification.THEORY]: "#a88764",
-    [Classification.RISKY]: "#8983ac"
+    [Classification.MISS]: "#fb7466"
 };
 
 export const classificationNames = {
@@ -58,7 +58,7 @@ export const classificationNames = {
     [Classification.BLUNDER]: "classifications.blunder",
     [Classification.FORCED]: "classifications.forced",
     [Classification.THEORY]: "classifications.theory",
-    [Classification.RISKY]: "classifications.risky"
+    [Classification.MISS]: "classifications.miss"
 };
 
 export const inalterableClassifications = [

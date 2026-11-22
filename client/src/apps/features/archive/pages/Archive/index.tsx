@@ -14,7 +14,6 @@ import { deleteArchivedGames, getArchivedGames } from "@/lib/gameArchive";
 
 import * as styles from "./Archive.module.css";
 
-import iconArchive from "@assets/img/icons/archive.png";
 import iconDelete from "@assets/img/interface/delete.svg";
 
 function Archive() {
@@ -39,12 +38,16 @@ function Archive() {
     return <div className={styles.wrapper}>
         <div className={styles.toolbar}>
             <div className={styles.toolbarLeft}>
-                <span className={styles.title}>
-                    <img src={iconArchive} height={24} />
+                <h1 className={styles.title}>
+                    {t("archive.title")}
 
-                    {t("archive.title") + " "}
-                    
-                    ({archive ? Object.keys(archive).length : "..."})
+                    <span className={styles.count}>
+                        {archive ? Object.keys(archive).length : "…"}
+                    </span>
+                </h1>
+
+                <span className={styles.description}>
+                    {t("archive.description")}
                 </span>
 
                 {archive && selectedGameIds.length > 0
@@ -89,9 +92,22 @@ function Archive() {
 
         {status == "pending" && <LoadingPlaceholder/>}
 
+        {archive && Object.keys(archive).length == 0 && <div
+            className={styles.empty}
+        >
+            <span>{t("archive.empty")}</span>
+
+            <a href="/analysis">
+                <Button style={{ backgroundColor: ButtonColour.BLUE }}>
+                    {t("sidebar.analysis", { ns: "common" })}
+                </Button>
+            </a>
+        </div>}
+
         <div className={styles.games}>
             {archive && Object.entries(archive).map(
                 ([ id, game ]) => <GameListing
+                    key={id}
                     style={{ justifyContent: "start" }}
                     game={game}
                     selected={selectedGameIds.includes(id)}
@@ -119,7 +135,7 @@ function Archive() {
             }}
             dangerAction
         >
-            <span style={{ color: "white" }}>
+            <span style={{ color: "var(--ui-text)" }}>
                 {t("archive.deleteConfirm", {
                     amount: selectedGameIds.length
                 })}

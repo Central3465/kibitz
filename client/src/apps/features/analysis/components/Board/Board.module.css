@@ -1,24 +1,147 @@
 .wrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-}
-
-.profile {
-    display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    padding: 7px 15px;
-    box-sizing: border-box;
-    min-width: 130px;
-    min-height: 55px;
-
-    background-color: var(--ui-shade-3);
+    min-width: 0;
+    min-height: 0;
 }
 
-.boardContainer {
+.boardColumn {
     display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.playerRow {
+    box-sizing: border-box;
+    height: 44px;
+}
+
+.boardRow {
+    display: flex;
+    gap: 8px;
+}
+
+.board {
+    flex-shrink: 0;
+
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.evaluationBar {
+    flex-shrink: 0;
+    width: 24px;
+}
+
+/* Player bars */
+.playerBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 2px;
+    box-sizing: border-box;
+    height: 100%;
+    min-width: 0;
+}
+
+.playerAvatar {
+    display: flex;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.playerAvatar[data-colour="white"] {
+    background: linear-gradient(135deg, #f4f4f4, #bfc5ce);
+}
+
+.playerAvatar[data-colour="black"] {
+    border: 1px solid var(--ui-shade-6);
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #3b414b, #15181d);
+}
+
+.playerAvatar img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.playerDetails {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-grow: 1;
+    min-width: 0;
+
+    white-space: nowrap;
+}
+
+.playerTitle {
+    padding: 1px 5px;
+    align-self: center;
+
+    border-radius: 4px;
+    background-color: #b3261e;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.playerName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    color: var(--ui-text);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.playerRating {
+    color: var(--ui-text-muted);
+    font-size: 0.85rem;
+}
+
+.material {
+    color: var(--ui-text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.turnIndicator {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    margin-right: 4px;
+
+    border-radius: 50%;
+    opacity: 0;
+
+    transition: opacity 0.2s ease;
+}
+
+.turnIndicator[data-colour="white"] {
+    background-color: #f2f2f2;
+}
+
+.turnIndicator[data-colour="black"] {
+    border: 2px solid #f2f2f2;
+    box-sizing: border-box;
+}
+
+.toMove {
+    opacity: 1;
+}
+
+@media (max-width: 900px) {
+    .board {
+        box-shadow: none;
+    }
+
+    .playerBar {
+        padding: 6px 10px;
+    }
 }

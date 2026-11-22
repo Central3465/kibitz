@@ -4,49 +4,100 @@
 
 .playedHighlight {
     position: absolute;
+    inset: 0;
+
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.piece {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 100%;
-    opacity: 0.5;
+}
+
+.selectedHighlight {
+    position: absolute;
+    inset: 0;
+
+    background-color: rgba(255, 255, 120, 0.4);
+    pointer-events: none;
+}
+
+.checkHighlight {
+    position: absolute;
+    inset: 0;
+
+    background: radial-gradient(
+        circle,
+        rgba(255, 40, 40, 0.95) 0%,
+        rgba(230, 20, 20, 0.6) 35%,
+        rgba(200, 0, 0, 0) 75%
+    );
+    pointer-events: none;
 }
 
 .highlight {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    
+    inset: 0;
+
     background-color: #eb6150;
     opacity: 0.8;
+    pointer-events: none;
 }
 
 .playableMoveCircle {
     position: absolute;
-    top: 35%;
-    left: 35%;
+    top: 50%;
+    left: 50%;
     width: 30%;
     height: 30%;
+    z-index: 5;
 
     border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(20, 20, 20, 0.22);
+    transform: translate(-50%, -50%) !important;
+    pointer-events: none;
 }
 
 .capturableMoveCircle {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
+    inset: 0;
+    z-index: 5;
 
     border-radius: 50%;
-    border: 6px solid rgba(0, 0, 0, 0.15);
-    background-color: rgba(0, 0, 0, 0);
+    background: radial-gradient(
+        transparent 0%,
+        transparent 62%,
+        rgba(20, 20, 20, 0.22) 63%
+    );
+    pointer-events: none;
 }
 
 .classification {
     position: absolute;
-    right: -15%;
-    top: -15%;
-    width: 45%;
-    height: 45%;
+    right: -14%;
+    top: -14%;
+    width: 44%;
+    height: 44%;
     z-index: 6;
+
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45));
+    pointer-events: none;
+    user-select: none;
+
+    animation: classificationPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes classificationPop {
+    from {
+        opacity: 0;
+        transform: scale(0.4);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

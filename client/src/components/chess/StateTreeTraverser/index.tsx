@@ -91,14 +91,14 @@ function StateTreeTraverser({ className, style }: StateTreeTraverserProps) {
     return <div className={`${styles.wrapper} ${className}`} style={style}>
         <img
             src={iconInterfaceStart}
-            width={50}
+           
             onClick={traverseToBeginning}
             title={t("stateTreeTraverser.beginning")}
         />
 
         <img
             src={iconInterfaceBack}
-            width={50}
+           
             onClick={traverseBackwards}
             title={t("stateTreeTraverser.back")}
         />
@@ -111,7 +111,7 @@ function StateTreeTraverser({ className, style }: StateTreeTraverserProps) {
                 : t("stateTreeTraverser.play")
             }
         >
-            <img width={50} src={autoplayEnabled
+            <img src={autoplayEnabled
                 ? iconInterfacePause
                 : iconInterfacePlay
             }/>
@@ -119,14 +119,14 @@ function StateTreeTraverser({ className, style }: StateTreeTraverserProps) {
 
         <img
             src={iconInterfaceNext}
-            width={50}
+           
             onClick={traverseForwards}
             title={t("stateTreeTraverser.next")}
         />
 
         <img
             src={iconInterfaceEnd}
-            width={50}
+           
             onClick={traverseToEnd}
             title={t("stateTreeTraverser.end")}
         />

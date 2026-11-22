@@ -1,167 +1,146 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Tooltip } from "react-tooltip";
 
-import { useAuthedProfile } from "@/hooks/api/useProfile";
 import Typography from "@/components/Typography";
-import Button from "@/components/common/Button";
-import BlurBackground from "@/components/layout/BlurBackground";
-import Sidebar from "@/components/layout/sidebar/Sidebar";
-import authClient from "@/lib/auth";
+import Icon, { IconName } from "@/components/common/Icon";
 
-import HoverDropdown from "./HoverDropdown";
 import * as styles from "./NavigationBar.module.css";
 
-import iconInterfaceMenu from "@assets/img/interface/menu.svg";
-import iconIconsAnalysis from "@assets/img/icons/analysis.png";
-import iconIconsArchive from "@assets/img/icons/archive.png";
-import iconIconsNews from "@assets/img/icons/news.png";
-import iconKofi from "@assets/img/kofi.svg";
-import iconInterfaceSettings from "@assets/img/interface/settings.svg";
-import iconInterfaceSignin from "@assets/img/interface/sign_in.svg";
-import iconInterfaceAccount from "@assets/img/interface/account.svg";
-import iconIconsSettings from "@assets/img/icons/settings.png";
+interface NavigationLink {
+    url: string;
+    icon: IconName;
+    label: string;
+}
+
+function isActive(url: string) {
+    return location.pathname == url
+        || location.pathname.startsWith(url + "/");
+}
 
 function NavigationBar() {
-    const { t } = useTranslation("common"); 
+    const { t } = useTranslation("common");
 
-    const { profile, status } = useAuthedProfile();
+    const [ drawerOpen, setDrawerOpen ] = useState(false);
 
-    const [ sidebarOpen, setSidebarOpen ] = useState(false);
+    const links: NavigationLink[] = [
+        { url: "/analysis", icon: "analysis", label: t("sidebar.analysis") },
+        { url: "/archive", icon: "archive", label: t("sidebar.archive") }
+    ];
 
-    async function signOut() {
-        await authClient.signOut();
-        location.href = "/signin";
-    }
+    const secondaryLinks: NavigationLink[] = [
+        { url: "/settings", icon: "settings", label: t("settings") },
+        { url: "/help", icon: "help", label: t("navigationBar.tooltips.help") }
+    ];
 
-    return <div className={styles.wrapper}>
+    // Close drawer with escape key, lock scrolling while open
+    useEffect(() => {
+        if (!drawerOpen) return;
+
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key == "Escape") setDrawerOpen(false);
+        };
+
+        document.body.style.overflow = "hidden";
+        addEventListener("keydown", onKeyDown);
+
+        return () => {
+            document.body.style.overflow = "";
+            removeEventListener("keydown", onKeyDown);
+        };
+    }, [drawerOpen]);
+
+    return <header className={styles.wrapper}>
         <div className={styles.section}>
-            <div className={styles.section}>
-                <img
-                    className={styles.menuButton}
-                    src={iconInterfaceMenu}
-                    height={35}
-                    onClick={() => setSidebarOpen(true)}
-                />
+            <button
+                className={`${styles.iconButton} ${styles.menuButton}`}
+                aria-label="Menu"
+                onClick={() => setDrawerOpen(true)}
+            >
+                <Icon name="menu" />
+            </button>
 
+            <a href="/analysis" className={styles.brand}>
                 <Typography
-                    textClassName={styles.typographyText}
+                    textClassName={styles.brandText}
+                    iconStyle={{ height: 30 }}
                     includeIcon
-                />
-            </div>
-
-            <div className={styles.tabs}>
-                <HoverDropdown
-                    icon={iconIconsAnalysis}
-                    url="/analysis"
-                >
-                    {t("sidebar.analysis")}
-                </HoverDropdown>
-
-                <HoverDropdown
-                    icon={iconIconsArchive}
-                    url="/archive"
-                >
-                    {t("sidebar.archive")}
-                </HoverDropdown>
-
-                <HoverDropdown
-                    icon={iconIconsNews}
-                    url="/news"
-                >
-                    {t("sidebar.news")}
-                </HoverDropdown>
-            </div>
-        </div>
-
-        <div className={styles.section}>
-            <a href="https://ko-fi.com/wintrcat" target="_blank">
-                <Button
-                    className={styles.support}
-                    icon={iconKofi}
-                    tooltipId="navigation-bar-support"
                 />
             </a>
 
-            <Tooltip
-                id="navigation-bar-support"
-                content={t("navigationBar.tooltips.support")}
-                delayShow={500}
-            />
-
-            {status == "pending" && <span>
-                {t("loading")}
-            </span>}
-
-            {status == "success" && <HoverDropdown
-                dropdownClassName={styles.profileMenu}
-                menuPosition="right"
-                openStrategy="click"
-                options={[
-                    // {
-                    //     icon: iconInterfaceAccount,
-                    //     label: t("navigationBar.profileMenu.profile"),
-                    //     url: `/profile/${profile.username}`
-                    // },
-                    {
-                        icon: iconInterfaceSettings,
-                        label: t("settings"),
-                        url: "/settings"
-                    },
-                    {
-                        icon: iconInterfaceSignin,
-                        label: t("navigationBar.profileMenu.signOut"),
-                        onClick: signOut
-                    }
-                ]}
-            >
-                <span className={styles.profileUsername}>
-                    {profile.username}
-                </span>
-
-                <img
-                    className={styles.profileIcon}
-                    src={iconInterfaceAccount}
-                />
-
-                {/* <div className={styles.profileImage} /> */}
-            </HoverDropdown>}
-
-            {status == "error" && <>
-                <a href="/signin">
-                    <Button
-                        className={styles.signIn}
-                        icon={iconInterfaceSignin}
-                        iconSize="28px"
-                    >
-                        {t("navigationBar.signIn")}
-                    </Button>
-                </a>
-
-                <a href="/settings">
-                    <Button
-                        className={styles.settings}
-                        icon={iconIconsSettings}
-                        iconSize="28px"
-                    />
-                </a>
-            </>}
+            <nav className={styles.links}>
+                {links.map(link => <a
+                    key={link.url}
+                    href={link.url}
+                    className={`${styles.link} ${
+                        isActive(link.url) ? styles.activeLink : ""
+                    }`}
+                >
+                    <Icon name={link.icon} size={18} />
+                    {link.label}
+                </a>)}
+            </nav>
         </div>
 
-        {sidebarOpen && <BlurBackground
-            style={{ zIndex: 1000 }}
-            onClick={() => setSidebarOpen(false)}
-        />}
+        <div className={styles.section}>
+            <a
+                href="/help"
+                className={`${styles.iconButton} ${styles.desktopOnly}`}
+                title={t("navigationBar.tooltips.help")}
+            >
+                <Icon name="help" />
+            </a>
 
-        <Sidebar
-            style={{
-                zIndex: 1001,
-                transition: "left 0.3s ease",
-                left: sidebarOpen ? "0" : "-320px"
-            }}
-            onClose={() => setSidebarOpen(false)}
+            <a
+                href="/settings"
+                className={`${styles.iconButton} ${
+                    isActive("/settings") ? styles.activeIconButton : ""
+                }`}
+                title={t("settings")}
+            >
+                <Icon name="settings" />
+            </a>
+        </div>
+
+        <div
+            className={`${styles.backdrop} ${drawerOpen ? styles.open : ""}`}
+            onClick={() => setDrawerOpen(false)}
         />
-    </div>;
+
+        <aside
+            className={`${styles.drawer} ${drawerOpen ? styles.open : ""}`}
+            aria-hidden={!drawerOpen}
+        >
+            <div className={styles.drawerHeader}>
+                <Typography
+                    textClassName={styles.brandText}
+                    iconStyle={{ height: 30 }}
+                    includeIcon
+                />
+
+                <button
+                    className={styles.iconButton}
+                    aria-label="Close menu"
+                    onClick={() => setDrawerOpen(false)}
+                >
+                    <Icon name="close" />
+                </button>
+            </div>
+
+            <nav className={styles.drawerLinks}>
+                {[ ...links, ...secondaryLinks ].map(link => <a
+                    key={link.url}
+                    href={link.url}
+                    className={`${styles.drawerLink} ${
+                        isActive(link.url) ? styles.activeLink : ""
+                    }`}
+                    tabIndex={drawerOpen ? 0 : -1}
+                >
+                    <Icon name={link.icon} size={20} />
+                    {link.label}
+                </a>)}
+            </nav>
+        </aside>
+    </header>;
 }
 
 export default NavigationBar;

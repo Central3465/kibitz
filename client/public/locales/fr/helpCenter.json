@@ -1,9 +1,6 @@
 {
     "title": "Centre d'Aide",
-    "contact": {
-        "title": "Contactez-nous",
-        "message": "Si vous voulez nous contacter, vous pouvez envoyer un mail à l'adresse :"
-    },
+    "contact": {},
     "analysis": {
         "title": "Analyser une partie",
         "part1": "Vous pouvez analyser vos parties d'échecs sur la",

@@ -9,8 +9,6 @@ import Evaluation from "shared/types/game/position/Evaluation";
 interface BoardProps {
     className?: string;
     style?: CSSProperties;
-    profileClassName?: string;
-    profileStyle?: CSSProperties;
     whiteProfile?: PlayerProfile;
     blackProfile?: PlayerProfile;
     node?: StateTreeNode;

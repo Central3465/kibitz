@@ -1,15 +1,30 @@
 .wrapper {
-    padding: 5px;
-    padding-left: 10px;
+    flex-shrink: 0;
+    padding: 9px 12px;
     box-sizing: border-box;
     width: 100%;
-    
-    border-radius: 5px;
+
+    border-radius: var(--ui-radius-sm);
+    color: var(--ui-text-muted);
+    font-weight: 500;
+    white-space: nowrap;
 
     cursor: pointer;
-    transition-duration: 0.3s;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 .wrapper:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--ui-shade-4);
+    color: var(--ui-text);
+}
+
+@media (max-width: 760px) {
+    .wrapper {
+        width: auto;
+    }
+}
+
+.active {
+    background-color: var(--ui-shade-5) !important;
+    color: var(--ui-text) !important;
 }

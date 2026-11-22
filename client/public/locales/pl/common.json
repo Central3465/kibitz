@@ -5,16 +5,12 @@
     "error": "Błąd",
     "reset": "Zresetuj",
     "navigationBar": {
-        "support": "Wsparcie",
         "tooltips": {
-            "support": "Wspomóż nas ❤️",
             "help": "Centrum pomocy"
         }
     },
     "sidebar": {
-        "analysis": "Analiza",
-        "archive": "Archiwum",
-        "news": "Aktualności"
+        "analysis": "Analiza"
     },
     "gameListing": {
         "gameResults": {

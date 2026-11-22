@@ -45,11 +45,11 @@ function AnalysisPanel({
         style={style}
     >
         <div className={styles.components}>
-            <div className={styles.title}>
-                {t("title")}
-            </div>
+            <div className={styles.header}>
+                <h1 className={styles.title}>{t("title")}</h1>
 
-            <OptionsToolbar/>
+                <OptionsToolbar/>
+            </div>
 
             {gameAnalysisOpen && <TabBar/>}
 
