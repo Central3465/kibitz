@@ -22,8 +22,7 @@
     "footer": {
         "language": "Language",
         "languagesDialog": {
-            "select": "Select a language",
-            "help": "Help us translate WintrChess"
+            "select": "Select a language"
         },
         "termsOfService": "Terms of Service",
         "privacyPolicy": "Privacy Policy",

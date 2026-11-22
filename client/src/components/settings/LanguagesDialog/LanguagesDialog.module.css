@@ -36,12 +36,3 @@
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.helpLink {
-    color: var(--ui-blue);
-
-    transition-duration: 0.3s;
-}
-
-.helpLink:hover {
-    filter: brightness(1.2)
-}

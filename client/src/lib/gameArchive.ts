@@ -11,7 +11,7 @@ import APIResponse from "@/types/APIResponse";
  * so no account or server-side database is required.
  */
 
-const databaseName = "wintrchess";
+const databaseName = "kibitz";
 const storeName = "savedGames";
 
 export const maximumArchiveSize = 200;

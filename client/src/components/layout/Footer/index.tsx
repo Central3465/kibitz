@@ -27,7 +27,7 @@ function Footer({ className, style }: FooterProps) {
         style={style}
     >
         <span className={styles.brand}>
-            WintrChess
+            Kibitz
         </span>
 
         <nav className={styles.links}>
@@ -50,7 +50,7 @@ function Footer({ className, style }: FooterProps) {
                 {t("footer.privacyPolicy")}
             </a>
 
-            <a href="https://github.com/WintrCat/wintrchess" target="_blank">
+            <a href="https://github.com/central3465/wintrchess" target="_blank">
                 {t("footer.openSource")}
             </a>
         </nav>

@@ -25,7 +25,7 @@ function Typography({
                 className={iconClassName}
                 style={{ height: 40, ...iconStyle }}
                 src={iconLogo}
-                title="WINTR"
+                title="Kibitz"
                 draggable={false}
             />
         }
@@ -34,11 +34,7 @@ function Typography({
             className={`${styles.title} ${textClassName}`}
             style={textStyle}
         >
-            Wintr
-
-            <b style={{ letterSpacing: 0 }}>
-                Chess
-            </b>
+            <b>Kibitz</b>
         </span>
     </div>;
 }

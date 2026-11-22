@@ -30,13 +30,6 @@ function LanguagesDialog({ onClose }: LanguagesDialogProps) {
                 {lang.label}
             </div>)}
         </div>
-
-        <a
-            className={styles.helpLink}
-            href="https://crowdin.com/project/wintrchess"
-        >
-            {t("footer.languagesDialog.help")}
-        </a>
     </Dialog>;
 }
 

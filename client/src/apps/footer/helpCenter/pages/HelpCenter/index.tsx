@@ -41,7 +41,7 @@ function HelpCenter() {
 
             <a
                 className={styles.importantValue}
-                href="https://github.com/WintrCat/wintrchess/issues"
+                href="https://github.com/central3465/wintrchess/issues"
                 target="_blank"
             >
                 <b>GitHub Issues</b>

@@ -26,7 +26,7 @@ function PrivacyPolicy() {
             </h2>
 
             <span>
-                WintrChess does not have user accounts, does not show advertisements and does
+                Kibitz does not have user accounts, does not show advertisements and does
                 not use analytics or tracking cookies. Everything you do on the Website, including
                 engine analysis and move classification, happens inside your own browser.
             </span>

@@ -26,13 +26,15 @@ function Terms() {
             </h2>
 
             <span>
-                wintrchess.com ("We", "Us", "Service(s)", "Website") is a website that
+                Kibitz ("We", "Us", "Service(s)", "Website") is a website that
                 provides analysis on Chess games, as well as other Chess related tools.
-                For questions about these terms, you can contact us via the following
-                email address:
+                For questions about these terms, you can open an issue on the project's
+                GitHub repository:
             </span>
 
-            <b>{process.env.EMAIL_ACCOUNT}</b>
+            <a href="https://github.com/central3465/wintrchess/issues">
+                github.com/central3465/wintrchess/issues
+            </a>
 
             <span>
                 1.1 These terms (the "Terms") constitute a legally binding agreement between
